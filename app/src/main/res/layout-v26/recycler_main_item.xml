@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_item_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    app:cardPreventCornerOverlap="false">
+
+    <RelativeLayout
+        android:id="@+id/main_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Metadata Row -->
+        <LinearLayout
+            android:id="@+id/metadata_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:background="@color/category_1"
+                android:fontFamily="@font/tajawal_medium"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="المصدر"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:background="@color/category_2"
+                android:fontFamily="@font/tajawal_medium"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="الفئة"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/displayDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/category_3"
+                android:fontFamily="@font/tajawal_medium"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:text="التاريخ"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/metadata_row"
+            android:fontFamily="@font/tajawal_medium"
+            android:gravity="start"
+            android:justificationMode="inter_word"
+            android:lineSpacingExtra="4sp"
+            android:text="عنوان الخبر"
+            android:textColor="@color/text_secondary"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_item_card"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    app:cardCornerRadius="50dp"
+    app:cardElevation="2dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginEnd="2dp"
+    app:strokeWidth="0.5dp"
+    app:strokeColor="@color/gray_200"
+    app:cardPreventCornerOverlap="true">
+
+    <TextView
+        android:id="@+id/source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/tajawal_medium"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="16dp"
+        android:text="تجربة"
+        android:textColor="@color/selector_clip_text"
+        android:textSize="14sp"
+        android:background="@drawable/chip_selector"
+        android:gravity="center"/>
+</com.google.android.material.card.MaterialCardView>

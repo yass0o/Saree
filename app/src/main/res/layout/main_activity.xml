@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/do3a2_background"
+    tools:context=".Activities.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/action_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:visibility="gone"
+        android:background="@drawable/rounded_orange_border"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/share_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="4dp"
+            android:fontFamily="@font/tajawal_medium"
+            android:gravity="center_vertical"
+            android:text="25"
+            android:textColor="@color/dark_orange"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/mdi_share"
+            app:drawableTint="@color/dark_orange" />
+
+        <ImageView
+            android:id="@+id/copy_selected"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/mdi_copy"
+            android:tint="@color/dark_orange" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/main_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingBottom="4dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/tajawal_medium"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/dark_orange"
+        android:shadowColor="@color/orange"
+        android:shadowDx="-2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
+        android:text="@string/main_title"
+        android:textSize="24sp" />
+
+<!--    app:drawableEndCompat="@drawable/alsarea_trans"-->
+<!--    app:drawableTint="@color/dark_orange"-->
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/main_title"
+        android:layout_alignBottom="@+id/main_title"
+        android:id="@+id/main_logo"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/alsarea" />
+
+    <TextView
+        android:id="@+id/main_title_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/main_logo"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_alignTop="@+id/main_logo"
+        android:layout_alignBottom="@+id/main_logo"
+        android:fontFamily="@font/tajawal_medium"
+        android:gravity="center"
+        android:shadowColor="@color/orange"
+        android:shadowDx="-2"
+        android:shadowDy="2"
+        android:shadowRadius="1"
+        android:text="@string/main_title_number"
+        android:textColor="@color/orange_800"
+        android:textSize="14sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/main_search"
+        android:layout_margin="16dp"
+        app:fabSize="mini"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_up"
+        app:backgroundTint="@color/purple_200" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/horizontalrecyclerView"
+        android:layout_below="@+id/main_title"
+        android:scrollbarThumbHorizontal="@color/orange"
+        android:scrollbarSize="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/horizontalrecyclerView"
+        android:id="@+id/main_weather_card_scroll">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_weather_card"
+            android:layout_marginTop="8dp"
+            android:elevation="4dp"
+            android:focusable="true"
+            android:visibility="gone"
+            android:clickable="true"
+            android:foreground="@drawable/press"
+            app:cardCornerRadius="12dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/main_relative"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/main_relative_2">
+
+                    <TextView
+                        android:id="@+id/weather_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/tajawal_medium"
+                        android:background="@color/primary_blue"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="النشرة"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/main_relative_2"
+                    android:id="@+id/main_relative_0">
+
+                    <TextView
+                        android:id="@+id/weather_source"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:fontFamily="@font/tajawal_medium"
+                        android:layout_alignParentStart="true"
+                        android:gravity="start"
+                        android:justificationMode="inter_word"
+                        android:padding="10dp"
+                        android:lineSpacingExtra="4sp"
+                        android:text="الطقس"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/weather_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/weather_source"
+                        android:background="@color/primary_blue"
+                        android:fontFamily="@font/tajawal_medium"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        android:text="أحوال الطقس"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/main_relative_0"
+                    android:orientation="vertical"
+                    android:id="@+id/main_relative_1"
+                    android:layout_marginBottom="100dp"
+                    android:background="@drawable/background_gradient"
+                    android:padding="5dp"
+                    android:clipToPadding="false">
+
+                    <TextView
+                        android:id="@+id/weather_day2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:justificationMode="inter_word"
+                        android:background="@drawable/card_elevation"
+                        android:fontFamily="@font/tajawal_medium"
+                        android:gravity="start"
+                        android:padding="10dp"
+                        android:text="الطقس"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:lineSpacingExtra="4sp" />
+
+                    <TextView
+                        android:id="@+id/weather_day3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/card_elevation"
+                        android:fontFamily="@font/tajawal_medium"
+                        android:gravity="start"
+                        android:padding="10dp"
+                        android:text="الطقس"
+                        android:textColor="@color/black"
+                        android:justificationMode="inter_word"
+                        android:textSize="16sp"
+                        android:lineSpacingExtra="4sp" />
+
+                    <TextView
+                        android:id="@+id/weather_day4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/card_elevation"
+                        android:fontFamily="@font/tajawal_medium"
+                        android:gravity="start"
+                        android:padding="10dp"
+                        android:text="الطقس"
+                        android:justificationMode="inter_word"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:lineSpacingExtra="4sp" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_weather_card_scroll">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbarThumbVertical="@color/orange"
+                    android:scrollbarSize="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:scrollbars="vertical" />
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:indeterminateDrawable="@drawable/saree_anim"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <EditText
+        android:id="@+id/main_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:background="@color/orange_800"
+        android:fontFamily="@font/tajawal_medium"
+        android:drawableStart="@drawable/ic_search"
+        android:drawableTint="@color/white"
+        android:textColorHint="@android:color/white"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:textSize="15sp"
+        android:gravity="start|center_vertical"
+        android:lines="1"
+        android:hint="بحث"
+        android:imeOptions="actionSearch" />
+
+</RelativeLayout>

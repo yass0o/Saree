@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">بالمختصر</string>
+    <string name="main_title">أخبار سريعة</string>
+    <string name="main_title_number">00</string>
+    <string name="clickbackagaintoexit">إضغط مجددا للخروج من التطبيق</string>
+    <string name="splash_text">بالمختصر, أخبار سريعة</string>
+</resources>
