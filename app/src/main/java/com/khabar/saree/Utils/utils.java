@@ -84,10 +84,34 @@ public class utils {
 
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(() -> {
+                    String caption = null;
 
+                    try {
+                        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+
+                        if (clipboard != null && clipboard.hasPrimaryClip()) {
+                            ClipData clipData = clipboard.getPrimaryClip();
+
+                            if (clipData != null && clipData.getItemCount() > 0) {
+                                CharSequence text = clipData.getItemAt(0).coerceToText(context);
+
+                                if (text != null && text.length() > 0) {
+                                    caption = text.toString();
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_STREAM, uri);
+
+                    // ✅ Add caption if exists
+                    if (caption != null) {
+                        intent.putExtra(Intent.EXTRA_TEXT, caption);
+                    }
+
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                     context.startActivity(Intent.createChooser(intent, "Share Image"));
