@@ -62,9 +62,10 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         TextView title,displayDate,category,source;
         MaterialCardView main_item_card;
-
+        ImageView image;
         public TextHolder(View itemView) {
             super(itemView);
+            image = itemView.findViewById(R.id.bayan_image);
             title = itemView.findViewById(R.id.title);
             displayDate = itemView.findViewById(R.id.displayDate);
             category = itemView.findViewById(R.id.category);
@@ -120,7 +121,7 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             h.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    utils.shareImageFromUrl(v.getContext(), item.getThumbnail());
+                    utils.shareImageFromUrl(v.getContext(), item.getThumbnail(),"");
                     return true;
                 }
             });
@@ -136,6 +137,17 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         } else {
 
             TextHolder h = (TextHolder) holder;
+
+            if (item.getThumbnail() != null && !item.getThumbnail().isEmpty()) {
+                h.image.setVisibility(View.VISIBLE);
+
+                Picasso.get()
+                        .load(item.getThumbnail())
+                        .into(h.image);
+
+            } else {
+                h.image.setVisibility(View.GONE);
+            }
             String text = item.getTitle().replace("**", "");
             text = text.replaceAll("(?m)^#.*$", "");
             text = text.replaceAll("(?s)﴿.*?﴾", "");
@@ -165,7 +177,11 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             h.main_item_card.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    utils.copyToClipboard(c,formated_msg);
+                    if (item.getThumbnail() != null && !item.getThumbnail().isEmpty()) {
+                        utils.shareImageFromUrl(v.getContext(), item.getThumbnail(),formated_msg);
+                    }else {
+                        utils.copyToClipboard(c, formated_msg);
+                    }
                     return true;
                 }
             });

@@ -72,6 +72,14 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/bayan_image"
+            android:layout_width="300dp"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
         <!-- Title -->
         <TextView
             android:id="@+id/title"

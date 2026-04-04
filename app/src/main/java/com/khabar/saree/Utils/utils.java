@@ -56,7 +56,7 @@ public class utils {
             //e.toString();
         }
     }
-    public static void shareImageFromUrl(Context context, String imageUrl) {
+    public static void shareImageFromUrl(Context context, String imageUrl, String default_caption) {
 
         new Thread(() -> {
             try {
@@ -107,10 +107,15 @@ public class utils {
                     intent.setType("image/*");
                     intent.putExtra(Intent.EXTRA_STREAM, uri);
 
-                    // ✅ Add caption if exists
-                    if (caption != null) {
+                    if(!default_caption.isEmpty()){
+                        intent.putExtra(Intent.EXTRA_TEXT, default_caption);
+                    }else if (caption != null) {
+                        // ✅ Add caption if exists
                         intent.putExtra(Intent.EXTRA_TEXT, caption);
                     }
+
+
+
 
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
