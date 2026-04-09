@@ -2,6 +2,7 @@ package com.khabar.saree.Activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -36,6 +37,12 @@ public class BayanActivity extends AppCompatActivity {
     String copyMode = "full";
     private BayanAdapter adapter;
     private List<BayanModel> list = new ArrayList<>();
+    private Handler handler = new Handler();
+    private Runnable refreshRunnable;
+    private static final int REFRESH_INTERVAL = 10000; // 10 sec
+    private boolean isLoading = false;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +111,48 @@ public class BayanActivity extends AppCompatActivity {
             loadData();
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData(); // refresh when coming back
+        startAutoRefresh();
+    }
+
+    private void startAutoRefresh() {
+        if (refreshRunnable == null) {
+            refreshRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    loadData();
+                    handler.postDelayed(this, REFRESH_INTERVAL);
+                }
+            };
+        }
+
+        handler.postDelayed(refreshRunnable, REFRESH_INTERVAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopAutoRefresh();
+    }
+
+    private void stopAutoRefresh() {
+        if (handler != null && refreshRunnable != null) {
+            handler.removeCallbacks(refreshRunnable);
+        }
+    }
+
+
     // =========================
     // LOAD DATA METHOD
     // =========================
     private void loadData() {
+
+        if (isLoading) return;
+        isLoading = true;
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -122,6 +167,7 @@ public class BayanActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BayanResponse> call, Response<BayanResponse> response) {
 
+                isLoading = false;
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
 
@@ -130,12 +176,8 @@ public class BayanActivity extends AppCompatActivity {
                     list = response.body().getData();
 
                     if (adapter == null) {
-                        adapter = new BayanAdapter(BayanActivity.this,copyMode, list);
+                        adapter = new BayanAdapter(BayanActivity.this, copyMode, list);
                         recyclerView.setAdapter(adapter);
-                        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
-                        if (animator instanceof SimpleItemAnimator) {
-                            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
-                        }
                     } else {
                         adapter.updateData(list);
                     }
@@ -145,6 +187,7 @@ public class BayanActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<BayanResponse> call, Throwable t) {
 
+                isLoading = false;
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
 
@@ -152,5 +195,6 @@ public class BayanActivity extends AppCompatActivity {
             }
         });
     }
+
 }
 

@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String ITEM_BAYAN = "بيانات المقاومة الاسلامية";
     // Keep RecyclerView state to restore on orientation change
     private int recyclerViewScrollPosition = 0;
+    TextView emptyView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
         weather_day3 = findViewById(R.id.weather_day3);
         weather_day4 = findViewById(R.id.weather_day4);
         main_weather_card = findViewById(R.id.main_weather_card);
+        emptyView = findViewById(R.id.emptyView);
+
         fab = findViewById(R.id.fab);
         fab.hide();
 
@@ -140,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         SelectedNewsList = new ArrayList<>();
         NewsList = new ArrayList<>();
         news_number = utils.getNumber(this, 600);
-
+        pullToRefresh.setOnChildScrollUpCallback((parent, child) -> false);
         showTextViewRunnable = () -> main_search.setVisibility(View.VISIBLE);
         setHAdapter();
         getWeather();
@@ -173,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
             clearNewsData();
             news_number = utils.getNumber(getApplicationContext(), 600);
             getData("" + news_number);
-            pullToRefresh.setRefreshing(false);
+            //pullToRefresh.setRefreshing(false);
             if (main_search != null) main_search.setText("");
             getWeather();
         });
@@ -321,6 +325,18 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<ContentModel>> call, Response<List<ContentModel>> response) {
                 Log.e("newsurl", "onResponse: "+call.request().url() );
                 if(response.isSuccessful() && response.body()!=null){
+
+                    if (response.body().isEmpty()) {
+                        emptyView.setVisibility(View.VISIBLE);
+                        mRecyclerView.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                        pullToRefresh.setRefreshing(false);
+                        return;
+                    }
+
+                    emptyView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+
                     for (ContentModel item : response.body()) {
                         String title = item.getSource();
                         // Add to set and list only if not already present
@@ -441,12 +457,21 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
+                pullToRefresh.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<List<ContentModel>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
+
+                if (NewsList.isEmpty()) {
+                    emptyView.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+                }
+
+                pullToRefresh.setRefreshing(false);
             }
+
         });
 
         share_selected.setOnClickListener(new View.OnClickListener() {
@@ -771,7 +796,7 @@ public class MainActivity extends AppCompatActivity {
         }
         fab.hide();
         getData(number);
-        pullToRefresh.setRefreshing(false);
+        //pullToRefresh.setRefreshing(false);
         if (main_search != null && main_search.getText() != null && main_search.getText().length() > 0) {
             main_search.setText("");
         }

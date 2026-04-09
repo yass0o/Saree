@@ -296,6 +296,14 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:scrollbars="vertical" />
+                <TextView
+                    android:id="@+id/emptyView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="لا يوجد اتصال أو بيانات"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textSize="16sp"/>
                 <ProgressBar
                     android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
