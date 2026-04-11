@@ -144,7 +144,10 @@ public class MainActivity extends AppCompatActivity {
         SelectedNewsList = new ArrayList<>();
         NewsList = new ArrayList<>();
         news_number = utils.getNumber(this, 600);
-        pullToRefresh.setOnChildScrollUpCallback((parent, child) -> false);
+        pullToRefresh.setOnChildScrollUpCallback((parent, child) ->
+                mRecyclerView.canScrollVertically(-1)
+        );
+
         showTextViewRunnable = () -> main_search.setVisibility(View.VISIBLE);
         setHAdapter();
         getWeather();
@@ -155,6 +158,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mRecyclerView.setLayoutManager(mLayoutManager);
+        // Ensure adapter is always attached (prevents blank screen)
+        if (mAdapter == null) {
+            mAdapter = new MainAdapter(getApplicationContext(), NewsList, false, null);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -200,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+
 
         // Load data only if first launch
         if (savedInstanceState == null) {
@@ -248,10 +259,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (NewsList == null || NewsList.isEmpty()) {
+            progressBar.setVisibility(View.VISIBLE);
+            getData("" + news_number);
+        }
+
         if (mRecyclerView != null && recyclerViewScrollPosition != RecyclerView.NO_POSITION) {
             mRecyclerView.scrollToPosition(recyclerViewScrollPosition);
         }
+        if (NewsList != null && NewsList.isEmpty()) {
+            emptyView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
+
     }
+
 
     private void getWeather() {
         RestManager mManager = new RestManager();
@@ -436,22 +459,7 @@ public class MainActivity extends AppCompatActivity {
                             if(mAdapter!=null) {
                                 mAdapter.notifyDataSetChanged();
                             }
-                            main_search.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                                    //  search(charSequence.toString());
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable editable) {
-                                    filter(editable.toString());
-                                }
-                            });
                         }
                     }, DELAY_MILLIS);
 
