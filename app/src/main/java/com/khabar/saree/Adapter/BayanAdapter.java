@@ -128,7 +128,16 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             h.displayDate.setText(item.getDisplayDate());
             h.category.setVisibility(View.GONE);
             h.source.setVisibility(View.GONE);
-            if(!item.getThumbnail().isEmpty()) {
+//            if(!item.getThumbnail().isEmpty()) {
+//                Picasso.get()
+//                        .load(item.getThumbnail())
+//                        .into(h.image);
+//            }
+
+            if (item.getThumbnail() != null && !item.getThumbnail().isEmpty()) {
+
+                h.image.setImageDrawable(null); // مهم جدا (reset recycled view)
+
                 Picasso.get()
                         .load(item.getThumbnail())
                         .into(h.image);
@@ -140,13 +149,14 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             if (item.getThumbnail() != null && !item.getThumbnail().isEmpty()) {
                 h.image.setVisibility(View.VISIBLE);
-
+                h.image.setImageDrawable(null);
                 Picasso.get()
                         .load(item.getThumbnail())
                         .into(h.image);
 
             } else {
                 h.image.setVisibility(View.GONE);
+                h.image.setImageDrawable(null);
             }
             String text = item.getTitle().replace("**", "");
             text = text.replaceAll("(?m)^#.*$", "");
