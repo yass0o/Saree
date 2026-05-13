@@ -21,6 +21,7 @@ import com.khabar.saree.Utils.utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -109,32 +110,63 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         notifyDataSetChanged();
     }
 
+//    public void updateData(List<BayanModel> newList) {
+//
+//        if (this.list == null || this.list.isEmpty()) {
+//            this.list = new ArrayList<>(newList);
+//            notifyDataSetChanged();
+//            return;
+//        }
+//
+//        int newItemsCount = 0;
+//
+//        for (BayanModel newItem : newList) {
+//
+//            boolean exists = false;
+//
+//            for (BayanModel oldItem : list) {
+//                if (oldItem.getId() == newItem.getId()) {
+//                    exists = true;
+//                    break;
+//                }
+//            }
+//
+//            if (!exists) {
+//                list.add(0, newItem); // add on top
+//                newItemsCount++;
+//            } else {
+//                break; // stop when reaching known items
+//            }
+//        }
+//
+//        if (newItemsCount > 0) {
+//            notifyItemRangeInserted(0, newItemsCount);
+//        }
+//    }
+
     public void updateData(List<BayanModel> newList) {
 
-        if (this.list == null || this.list.isEmpty()) {
-            this.list = new ArrayList<>(newList);
+        if (list == null || list.isEmpty()) {
+            list = new ArrayList<>(newList);
             notifyDataSetChanged();
             return;
         }
 
+        // ✅ Use String instead of Integer
+        HashSet<String> existingIds = new HashSet<>();
+        for (BayanModel item : list) {
+            existingIds.add(item.getId().trim());
+        }
+
         int newItemsCount = 0;
 
-        for (BayanModel newItem : newList) {
+        // loop from end to keep order correct
+        for (int i = newList.size() - 1; i >= 0; i--) {
+            BayanModel newItem = newList.get(i);
 
-            boolean exists = false;
-
-            for (BayanModel oldItem : list) {
-                if (oldItem.getId() == newItem.getId()) {
-                    exists = true;
-                    break;
-                }
-            }
-
-            if (!exists) {
-                list.add(0, newItem); // add on top
+            if (!existingIds.contains(newItem.getId().trim())) {
+                list.add(0, newItem);
                 newItemsCount++;
-            } else {
-                break; // stop when reaching known items
             }
         }
 
@@ -142,7 +174,6 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             notifyItemRangeInserted(0, newItemsCount);
         }
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 

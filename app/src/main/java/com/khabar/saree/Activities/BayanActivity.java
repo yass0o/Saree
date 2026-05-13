@@ -178,14 +178,17 @@ public class BayanActivity extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
 
-                    list = response.body().getData();
+                  //  list = response.body().getData();
+
+                    List<BayanModel> newList = response.body().getData();
 
                     if (adapter == null) {
-                        adapter = new BayanAdapter(BayanActivity.this, copyMode, list);
+                        adapter = new BayanAdapter(BayanActivity.this, copyMode, newList);
                         recyclerView.setAdapter(adapter);
                     } else {
-                        adapter.updateData(list);
+                        adapter.updateData(newList);
                     }
+
                 }
             }
 
