@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class BayanActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ProgressBar progressBar;
+    //private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     AppCompatRadioButton rb_full,rb_formatted;
     String copyMode = "full";
@@ -55,7 +55,7 @@ public class BayanActivity extends AppCompatActivity {
         rb_full = findViewById(R.id.rb_full);
         rb_formatted = findViewById(R.id.rb_formatted);
         recyclerView = findViewById(R.id.recyclerView);
-        progressBar = findViewById(R.id.progressBar);
+       // progressBar = findViewById(R.id.progressBar);
         swipeRefreshLayout = findViewById(R.id.pullToRefresh);
 
         SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
@@ -74,7 +74,12 @@ public class BayanActivity extends AppCompatActivity {
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
         prefs = getSharedPreferences("settings", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
@@ -154,7 +159,7 @@ public class BayanActivity extends AppCompatActivity {
         if (isLoading) return;
         isLoading = true;
 
-        progressBar.setVisibility(View.VISIBLE);
+       // progressBar.setVisibility(View.VISIBLE);
 
         RestManager mManager = new RestManager();
 
@@ -168,7 +173,7 @@ public class BayanActivity extends AppCompatActivity {
             public void onResponse(Call<BayanResponse> call, Response<BayanResponse> response) {
 
                 isLoading = false;
-                progressBar.setVisibility(View.GONE);
+          //      progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
 
                 if (response.isSuccessful() && response.body() != null) {
@@ -188,7 +193,7 @@ public class BayanActivity extends AppCompatActivity {
             public void onFailure(Call<BayanResponse> call, Throwable t) {
 
                 isLoading = false;
-                progressBar.setVisibility(View.GONE);
+          //      progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
 
                 Log.e("newsurl", "error: " + t.getMessage());

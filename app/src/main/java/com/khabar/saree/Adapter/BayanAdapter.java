@@ -103,10 +103,44 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public void updateData(List<BayanModel> newList) {
+    public void updateDataOld(List<BayanModel> newList) {
         this.list.clear();
         this.list.addAll(newList);
         notifyDataSetChanged();
+    }
+
+    public void updateData(List<BayanModel> newList) {
+
+        if (this.list == null || this.list.isEmpty()) {
+            this.list = new ArrayList<>(newList);
+            notifyDataSetChanged();
+            return;
+        }
+
+        int newItemsCount = 0;
+
+        for (BayanModel newItem : newList) {
+
+            boolean exists = false;
+
+            for (BayanModel oldItem : list) {
+                if (oldItem.getId() == newItem.getId()) {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists) {
+                list.add(0, newItem); // add on top
+                newItemsCount++;
+            } else {
+                break; // stop when reaching known items
+            }
+        }
+
+        if (newItemsCount > 0) {
+            notifyItemRangeInserted(0, newItemsCount);
+        }
     }
 
     @Override
@@ -140,6 +174,7 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                 Picasso.get()
                         .load(item.getThumbnail())
+                        .placeholder(R.drawable.default_image_grid)
                         .into(h.image);
             }
 
@@ -152,6 +187,7 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 h.image.setImageDrawable(null);
                 Picasso.get()
                         .load(item.getThumbnail())
+                        .placeholder(R.drawable.default_image_grid)
                         .into(h.image);
 
             } else {
