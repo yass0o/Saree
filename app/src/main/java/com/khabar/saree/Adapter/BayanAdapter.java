@@ -146,32 +146,46 @@ public class BayanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public void updateData(List<BayanModel> newList) {
 
-        if (list == null || list.isEmpty()) {
-            list = new ArrayList<>(newList);
+        if (newList == null) return;
+
+        if (this.list == null) {
+            this.list = new ArrayList<>();
+        }
+
+        // fast path: first load
+        if (this.list.isEmpty()) {
+            this.list.addAll(newList);
             notifyDataSetChanged();
             return;
         }
 
-        // ✅ Use String instead of Integer
         HashSet<String> existingIds = new HashSet<>();
+
         for (BayanModel item : list) {
-            existingIds.add(item.getId().trim());
-        }
-
-        int newItemsCount = 0;
-
-        // loop from end to keep order correct
-        for (int i = newList.size() - 1; i >= 0; i--) {
-            BayanModel newItem = newList.get(i);
-
-            if (!existingIds.contains(newItem.getId().trim())) {
-                list.add(0, newItem);
-                newItemsCount++;
+            if (item.getId() != null) {
+                existingIds.add(item.getId().trim());
             }
         }
 
-        if (newItemsCount > 0) {
-            notifyItemRangeInserted(0, newItemsCount);
+        int insertCount = 0;
+
+        // add only new items at TOP
+        for (int i = newList.size() - 1; i >= 0; i--) {
+
+            BayanModel newItem = newList.get(i);
+
+            if (newItem.getId() == null) continue;
+
+            String id = newItem.getId().trim();
+
+            if (!existingIds.contains(id)) {
+                list.add(0, newItem);
+                insertCount++;
+            }
+        }
+
+        if (insertCount > 0) {
+            notifyItemRangeInserted(0, insertCount);
         }
     }
     @Override

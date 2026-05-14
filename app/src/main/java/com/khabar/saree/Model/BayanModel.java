@@ -93,4 +93,13 @@ public class BayanModel {
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof BayanModel)) return false;
+
+        BayanModel other = (BayanModel) obj;
+        return id.equals(other.id); // adjust if needed
+    }
 }
